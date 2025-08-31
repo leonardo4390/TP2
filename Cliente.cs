@@ -1,17 +1,11 @@
 using System;
 
-class Cliente
+class Cliente: Persona
 {
-    public string Nombre { get; private set; }
-    public string Direccion { get; private set; }
-    public int Telefono { get; private set; }
     public string ReferenciaDireccion { get; private set; }
 
-    public Cliente(string nombre, string direccion, int telefono, string referencia)
+    public Cliente(string nombre, string direccion, int telefono, string referencia): base(nombre,direccion,telefono)
     {
-        Nombre = nombre;
-        Direccion = direccion;
-        Telefono = telefono;
         ReferenciaDireccion = referencia;
     }
 }
