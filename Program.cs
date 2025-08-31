@@ -4,12 +4,39 @@ class Program
 {
     public static void Main(String[] args)
     {
-        string rutaCadeteria = "cadeteria.csv";
-        string rutaCadetes = "cadetes.csv";
-
+        var acceso = InicializarAccesoADatos(out string rutaCadeteria, out string rutaCadetes);
         Cadeteria cadeteria = new Cadeteria(rutaCadeteria, rutaCadetes);
         GestioPedidos(cadeteria);
 
+    }
+
+    public static IAccesoADatos InicializarAccesoADatos(out string rutaCadeteria, out string rutaCadetes)
+    {
+        Console.WriteLine("\nSeleccione Fuente de Datos:");
+        Console.WriteLine("1 - CSV");
+        Console.WriteLine("2 - JSON");
+        Console.WriteLine("Opcion: ");
+        string opcion = Console.ReadLine();
+
+        rutaCadeteria = "";
+        rutaCadetes = "";
+
+        switch (opcion)
+        {
+            case "1":
+                rutaCadeteria = "cadeteria.csv";
+                rutaCadetes = "cadetes.csv";
+                return new AccesoADatosCSV();
+
+            case "2":
+                rutaCadeteria = "cadeteria.csv";
+                rutaCadetes = "cadetes.csv";
+                return new AccesoADatosJson();
+
+            default:
+                Console.WriteLine("Opcion Invalida, Finalizando Programa.");
+                return null;
+        }
     }
 
     public static void GestioPedidos(Cadeteria cadeteria)
