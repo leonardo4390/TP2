@@ -12,14 +12,14 @@ class Cadeteria
     public string Nombre => nombre;
     public int Telefono => telefono;
 
-    public Cadeteria(string rutaCadeteria, string rutaCadetes)
+    public Cadeteria(IAccesoADatos acceso, string rutaCadeteria, string rutaCadetes)
     {
-        var datosCadeteria = Csv.LeerLinea(rutaCadeteria);
+        var datosCadeteria = acceso.LeerCadeteria(rutaCadeteria);
         nombre = datosCadeteria[0];
         telefono = int.Parse(datosCadeteria[1]);
 
         Cadetes = new List<Cadete>();
-        var datosCadetes = Csv.LeerArchivo(rutaCadetes);
+        var datosCadetes = acceso.LeerCadetes(rutaCadetes);
         foreach (var fila in datosCadetes)
         {
             string nombre = fila[0];
@@ -104,7 +104,7 @@ class Cadeteria
     }
     public void MostrarInforme()
     {
-        Console.WriteLine($"\nInforme de actividad - {Nombre}");
+        Console.WriteLine($"\nInforme de actividad Cadeteria - {Nombre}");
         foreach (var cadete in Cadetes)
         {
             int entregados = Pedidos.Count(p => p.CadeteAsignado?.Id == cadete.Id && p.EstaEntregado());
@@ -113,6 +113,7 @@ class Cadeteria
             Console.WriteLine($"Pedidos Asignados: {total}");
             Console.WriteLine($"Pedidos entregados: {entregados}");
             Console.WriteLine($"\nJornal: {entregados * 500}");
+            Console.WriteLine("-----------------------------------");
         }
 
         var sinAsignar = Pedidos.Where(p => p.CadeteAsignado == null).ToList();
