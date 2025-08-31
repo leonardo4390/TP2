@@ -5,7 +5,7 @@ class Program
     public static void Main(String[] args)
     {
         var acceso = InicializarAccesoADatos(out string rutaCadeteria, out string rutaCadetes);
-        Cadeteria cadeteria = new Cadeteria(rutaCadeteria, rutaCadetes);
+        Cadeteria cadeteria = new Cadeteria(acceso,rutaCadeteria, rutaCadetes);
         GestioPedidos(cadeteria);
 
     }
